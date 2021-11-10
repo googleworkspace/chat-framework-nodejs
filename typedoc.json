@@ -1,0 +1,9 @@
+{
+    "out": "docs/reference",
+    "theme": "default",
+    "excludePrivate": true,
+    "excludeProtected":  true,
+    "entryPointStrategy": "packages",
+    "exclude": "*.spec.ts",
+    "excludeExternals": false
+}

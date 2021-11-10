@@ -1,0 +1,9 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "lib": [ "DOM", "es2019", "es2020.promise", "es2020.bigint", "es2020.string" ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "google-chat-nodejs-hello-pubsub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon -r ts-node src/index.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "compile:watch": "tsc --watch",
+    "fix": "eslint --fix src/**/*.ts",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "gts": "^3.1.0",
+    "typescript": "^4.0.3",
+    "@types/node": "^14.11.2",
+    "jest": "^27.3.1"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "@google/chat-sdk": "0.1",
+    "ts-node": "^10.2.1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "../../.eslintrc.json",
+  "overrides": [{
+    "files": "**/__tests__/**.ts",
+    "rules": {
+      "node/no-unpublished-import": 0
+    }
+  }]
+}

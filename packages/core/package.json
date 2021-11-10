@@ -1,0 +1,52 @@
+{
+  "name": "@google/chat-sdk",
+  "version": "0.1",
+  "description": "",
+  "main": "build/src/index.js",
+  "engines": {
+    "node": ">= 12"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "compile:watch": "tsc --watch",
+    "fix": "eslint --fix src/**/*.ts",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache2.0",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^14.11.2",
+    "gts": "^3.1.0",
+    "typescript": "^4.0.3",
+    "@types/debug": "^4.1.7",
+    "jest": "^27.2.4",
+    "ts-jest": "^27.0.5",
+    "@types/jest": "^27.0.2",
+    "supertest": "^6.1.6",
+    "@types/supertest": "^2.0.11",
+    "deepmerge": "^4.2.2",
+    "@types/deepmerge": "^2.2.0",
+    "type-fest": "^2.5.2"
+  },
+  "dependencies": {
+    "jose": "^3.19.0",
+    "@google-cloud/pubsub": "^2.15.1",
+    "auto-bind": "^4.0.0",
+    "await-event-emitter": "^2.0.2",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "google-auth-library": "^7.3.0",
+    "@googleapis/chat": "^3.0.2",
+    "googleapis-common": "^5.0.5",
+    "debug": "^4.3.2",
+    "emittery": "^0.10.0",
+    "urlpattern-polyfill": "^1.0.0-rc1"
+  },
+  "typedocMain": "src/index.ts"
+}
