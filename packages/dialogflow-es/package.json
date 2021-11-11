@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk-dialogflow",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "build/src/index.js",
   "scripts": {
