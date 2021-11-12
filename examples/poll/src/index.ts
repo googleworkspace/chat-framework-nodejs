@@ -21,7 +21,7 @@ bot.message(/help/i, async ({reply}) => {
 });
 
 // Show an image picker dialog
-bot.command('/mb2_1', async ({showDialog, messageText}) => {
+bot.command('/poll', async ({showDialog, messageText}) => {
   const dialog = buildConfigurationForm({
     topic: messageText,
     choices: [],
