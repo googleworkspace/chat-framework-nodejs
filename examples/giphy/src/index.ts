@@ -21,7 +21,7 @@ async function searchGifs(query: string, offset: number) {
 }
 
 const bot = Bot.http({
-  projectNumber: parseInt(process.env.GOOGLE_PROJECT_NUMBER),
+  projectNumber: process.env.GOOGLE_PROJECT_NUMBER,
 });
 
 // Help command

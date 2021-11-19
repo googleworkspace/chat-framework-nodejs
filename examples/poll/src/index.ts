@@ -17,7 +17,7 @@ bot.message(/help/i, async ({reply}) => {
   const msg = {
     text: 'Try "/poll" to start a poll.',
   };
-  return reply(msg);
+  await reply(msg);
 });
 
 // Show an image picker dialog
@@ -68,6 +68,9 @@ bot.action(
 bot.action('vote', async ({ack, user, parameters, updateMessage}) => {
   const choice = Number(parameters['index']);
   const userId = user?.name;
+  // Note that for this demo the poll results are stored in the chat message itself instead of external storage.
+  // While a convenient technique, it can result in lost votes. Prefer using a separate datastore for mutable
+  // state when multiple users are interacting with the message.
   const state: PollResults = JSON.parse(parameters['state']);
   if (choice === undefined || !state || !userId) {
     return ack();
