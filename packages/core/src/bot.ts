@@ -21,11 +21,12 @@ import {PubSubTransport, PubSubOptions} from './transport/pubsub';
 import autobind from 'auto-bind';
 import {chat_v1} from '@googleapis/chat';
 import Emittery from 'emittery';
-import {URLPattern } from 'urlpattern-polyfill/dist';
-import type { URLPatternInit } from './types/urlpattern';
-import assert from "assert";
+// @ts-ignore
+import {URLPattern} from 'urlpattern-polyfill/dist/index.umd.js';
+import type {URLPatternInit} from './types/urlpattern';
+import assert from 'assert';
 import Debug from 'debug';
-import {MatchedUrl} from "./types/message";
+import {MatchedUrl} from './types/message';
 
 const debug = Debug('chat:bot');
 
@@ -33,33 +34,29 @@ const debug = Debug('chat:bot');
  * Typo info for lifecycle events emitted by bot
  */
 export interface LifecycleEvents {
-  started: void,
+  started: void;
   stopped: void;
-  eventReceived: EventContext, // Before an event is dispatched
-  eventComplete: EventContext, // After an event has been processed
-  sendMessage: chat_v1.Schema$Message, // Before an outgoing message is sent
-  messageSent: chat_v1.Schema$Message, // After an outbound message is sent
-  error: Error, // Unhandled exception during dispatch
+  eventReceived: EventContext; // Before an event is dispatched
+  error: Error; // Unhandled exception during dispatch
 }
 
 /**
  * Typo info for events emitted by bot
  */
 interface Events extends LifecycleEvents {
-  space_add: EventContext,
-  space_remove: EventContext,
-  command: EventContext,
-  unfurl: EventContext,
-  action: EventContext,
-  message: EventContext,
+  space_add: EventContext;
+  space_remove: EventContext;
+  command: EventContext;
+  unfurl: EventContext;
+  action: EventContext;
+  message: EventContext;
 }
-
 
 /** Callbacks for handling events */
 export type EventHandler = (context: EventContext) => Promise<void>;
 
 type FilterFn = (context: EventContext) => boolean;
-type CommandInfo = { id: number, name: string };
+type CommandInfo = {id: number; name: string};
 
 /**
  * Retrieves the slash command id and name if present.
@@ -67,16 +64,18 @@ type CommandInfo = { id: number, name: string };
  * @param message
  * @return command id & name or undefined if not present in event.
  */
-function findSlashCommandInfo(message: chat_v1.Schema$Message): CommandInfo | undefined {
+function findSlashCommandInfo(
+  message: chat_v1.Schema$Message
+): CommandInfo | undefined {
   if (!message.annotations) {
     return undefined;
   }
-  for (let annotation of message.annotations) {
+  for (const annotation of message.annotations) {
     if (annotation.type !== 'SLASH_COMMAND') {
       continue;
     }
-    let id = parseInt(annotation.slashCommand!.commandId!);
-    let name = annotation.slashCommand!.commandName!;
+    const id = parseInt(annotation.slashCommand!.commandId!);
+    const name = annotation.slashCommand!.commandName!;
     return {id, name};
   }
   return undefined;
@@ -137,11 +136,17 @@ export class Bot {
     this.transport = transport;
   }
 
-  on<Name extends keyof LifecycleEvents>(eventName: Name, listener: (eventData: LifecycleEvents[Name]) => void | Promise<void>): Emittery.UnsubscribeFn {
+  on<Name extends keyof LifecycleEvents>(
+    eventName: Name,
+    listener: (eventData: LifecycleEvents[Name]) => void | Promise<void>
+  ): Emittery.UnsubscribeFn {
     return this._emitter.on(eventName, listener);
   }
 
-  off<Name extends keyof LifecycleEvents>(eventName: Name, listener: (eventData: LifecycleEvents[Name]) => void | Promise<void>): void {
+  off<Name extends keyof LifecycleEvents>(
+    eventName: Name,
+    listener: (eventData: LifecycleEvents[Name]) => void | Promise<void>
+  ): void {
     this._emitter.off(eventName, listener);
   }
 
@@ -157,9 +162,7 @@ export class Bot {
     this._transport = transport;
     if (this._transport) {
       this._transport.on('messageReceived', this.dispatch.bind(this));
-      // Rebroadcast reply events
-      this._transport.on('sendMessage', message => this._emitter.emit('sendMessage', message));
-      this._transport.on('messageSent', message => this._emitter.emit('messageSent', message));
+      this._transport.on('error', err => this._emitter.emit('error', err));
     }
   }
 
@@ -172,7 +175,7 @@ export class Bot {
    * @param options
    */
   static http(options: Partial<HttpOptions>) {
-    let transport = new HttpTransport(options);
+    const transport = new HttpTransport(options);
     return new Bot(transport);
   }
 
@@ -181,7 +184,7 @@ export class Bot {
    * @param options
    */
   static pubsub(options: Partial<PubSubOptions>) {
-    let transport = new PubSubTransport(options);
+    const transport = new PubSubTransport(options);
     return new Bot(transport);
   }
 
@@ -229,15 +232,15 @@ export class Bot {
    */
   command(command: number | string, handler: EventHandler): void {
     debug('Registering slash command handler: %s', command.toString);
-    const matcher: FilterFn = (ctx) => {
+    const matcher: FilterFn = ctx => {
       if (!ctx.message) {
         return false;
       }
       const invokedCommand = findSlashCommandInfo(ctx.message);
       debug('Matching: %s %O', command, invokedCommand);
-      return (invokedCommand?.name === command || invokedCommand?.id === command);
-    }
-    this._emitter.on(`command`, wrapHandler(handler, matcher));
+      return invokedCommand?.name === command || invokedCommand?.id === command;
+    };
+    this._emitter.on('command', wrapHandler(handler, matcher));
   }
 
   /**
@@ -307,17 +310,29 @@ export class Bot {
    */
   message(pattern: RegExp | string, handler: EventHandler): void;
 
-  message(handlerOrPattern: RegExp | string | EventHandler, handler?: EventHandler): void {
+  message(
+    handlerOrPattern: RegExp | string | EventHandler,
+    handler?: EventHandler
+  ): void {
     if (handler) {
       debug('Registering message handler with filter: %O', handlerOrPattern);
       const re = new RegExp(handlerOrPattern as RegExp | string);
-      const matcher: FilterFn = (ctx) => {
-        return re.test(ctx.messageText ?? '')
-      }
-      this._emitter.on('message', wrapHandler(handler, matcher));
+      const matcher: FilterFn = ctx => {
+        return re.test(ctx.messageText ?? '');
+      };
+      this._emitter.on(
+        'message',
+        wrapHandler(async ctx => {
+          ctx.regExpExecResult = re.exec(ctx.messageText ?? '') ?? undefined;
+          await handler(ctx);
+        }, matcher)
+      );
     } else {
       debug('Registering catch-all message handler');
-      this._emitter.on('message', wrapHandler(handlerOrPattern as EventHandler));
+      this._emitter.on(
+        'message',
+        wrapHandler(handlerOrPattern as EventHandler)
+      );
     }
   }
 
@@ -335,12 +350,11 @@ export class Bot {
    */
   action(actionName: string, handler: EventHandler): void {
     debug('Registering action handler: %s', actionName);
-    const matcher: FilterFn = (ctx) => {
+    const matcher: FilterFn = ctx => {
       return actionName === ctx.event.action?.actionMethodName;
-    }
-    this._emitter.on(`action`, wrapHandler(handler, matcher));
+    };
+    this._emitter.on('action', wrapHandler(handler, matcher));
   }
-
 
   /**
    * Registers a handler for link unfurling events. Either all URL matches
@@ -405,21 +419,27 @@ export class Bot {
    * @param handler - function to handle matching incoming messages
    */
   unfurl(pattern: string | URLPatternInit, handler: EventHandler): void;
-  unfurl(patternOrHandler: string | URLPatternInit | EventHandler, handler?: EventHandler): void {
+  unfurl(
+    patternOrHandler: string | URLPatternInit | EventHandler,
+    handler?: EventHandler
+  ): void {
     if (handler) {
       debug('Registering link unfurl handler: %s', patternOrHandler);
-      const re = new URLPattern(patternOrHandler as (string | URLPatternInit));
-      const matcher: FilterFn = (ctx) => {
-        const url =  (ctx.message as MatchedUrl)?.matchedUrl?.url;
+      const re = new URLPattern(patternOrHandler as string | URLPatternInit);
+      const matcher: FilterFn = ctx => {
+        const url = (ctx.message as MatchedUrl)?.matchedUrl?.url;
         return url !== undefined && re.test(url);
-      }
-      this._emitter.on('unfurl', wrapHandler(async (ctx) => {
-        // Preprocess the request to inject matched patterns from the URL
-        debug('Injecting URL parameters into request');
-        const url =  (ctx.message as MatchedUrl)!.matchedUrl!.url;
-        ctx.urlPatternResult = re.exec(url) ?? undefined;
-        await handler(ctx);
-      }, matcher));
+      };
+      this._emitter.on(
+        'unfurl',
+        wrapHandler(async ctx => {
+          // Preprocess the request to inject matched patterns from the URL
+          debug('Injecting URL parameters into request');
+          const url = (ctx.message as MatchedUrl)!.matchedUrl!.url;
+          ctx.urlPatternResult = re.exec(url) ?? undefined;
+          await handler(ctx);
+        }, matcher)
+      );
     } else {
       debug('Registering catch-all link unfurl handler');
       this._emitter.on('unfurl', wrapHandler(patternOrHandler as EventHandler));
@@ -473,10 +493,12 @@ export class Bot {
         eventName = 'action';
       } else if (event.type === 'MESSAGE') {
         eventName = 'message';
-        let slashCommand = findSlashCommandInfo(event.message!);
+        const slashCommand = findSlashCommandInfo(event.message!);
         if (slashCommand) {
           eventName = 'command';
-        } else if ((event.message as MatchedUrl).matchedUrl?.url !== undefined) {
+        } else if (
+          (event.message as MatchedUrl).matchedUrl?.url !== undefined
+        ) {
           eventName = 'unfurl';
         }
       }
@@ -484,7 +506,7 @@ export class Bot {
       if (eventName === undefined) {
         debug('Unrecognized event, nothing to dispatch');
         await msg.ack();
-        await this._emitter.emit('eventComplete', context);
+        await context.finish();
         return;
       }
 
@@ -493,12 +515,9 @@ export class Bot {
       // to decide if handled or not without risking race conditions.
       await this._emitter.emitSerial(eventName, context);
       await msg.ack();
-      await this._emitter.emit('eventComplete', context);
+      await context.finish();
     } catch (err) {
       await this._emitter.emit('error', err);
     }
   }
 }
-
-
-

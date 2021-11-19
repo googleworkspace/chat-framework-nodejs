@@ -46,7 +46,8 @@
     "googleapis-common": "^5.0.5",
     "debug": "^4.3.2",
     "emittery": "^0.10.0",
-    "urlpattern-polyfill": "^1.0.0-rc1"
+    "urlpattern-polyfill": "^1.0.0-rc1",
+    "gcp-metadata": "^4.3.1"
   },
   "typedocMain": "src/index.ts"
 }

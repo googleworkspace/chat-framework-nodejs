@@ -16,11 +16,15 @@
 
 import {chat_v1} from '@googleapis/chat';
 import {TransportEventContext} from './transport';
-import {Event} from "./types/event";
-import {FormInputs} from "./form";
-import {Bot} from "./bot";
-import type { URLPatternResult } from './types/urlpattern';
+import {Event} from './types/event';
+import {FormInputs} from './form';
+import {Bot} from './bot';
+import type {URLPatternResult} from './types/urlpattern';
+import Emittery from 'emittery';
 
+export interface Events {
+  finish: EventContext;
+}
 /**
  * Context provided to event handlers. This provides access to the underlying event
  * as well as a set of convenience accessors and methods for commonly used fields
@@ -28,10 +32,13 @@ import type { URLPatternResult } from './types/urlpattern';
  *
  * All fields can be safely destructured in handlers.
  */
-export class EventContext {
+export class EventContext extends Emittery<Events> {
   /** The raw event from chat */
   event: Event;
-  /** Whether or not this event has been handled. Used internally. */
+  /**
+   * Whether or not this event has been handled. Used internally.
+   * @internal
+   */
   handled = false;
   /**
    * Unique ID for keying any conversation related storage. Maps to either
@@ -44,7 +51,16 @@ export class EventContext {
    */
   urlPatternResult: URLPatternResult | undefined;
 
-  constructor(private bot: Bot, private transportContext: TransportEventContext) {
+  /**
+   * For regexp matches on messages, the result of the `exec` call.
+   */
+  regExpExecResult: RegExpExecArray | undefined;
+
+  constructor(
+    private bot: Bot,
+    private transportContext: TransportEventContext
+  ) {
+    super();
     this.event = transportContext.event;
 
     if (this.event.space?.threaded && this.event.message) {
@@ -52,6 +68,11 @@ export class EventContext {
     } else {
       this.conversationKey = this.event.space!.name!;
     }
+  }
+
+  /** @internal */
+  async finish() {
+    return this.emit('finish', this);
   }
 
   /**
@@ -86,8 +107,8 @@ export class EventContext {
    * Returns the trimmed text supplied by the user.
    */
   get messageText(): string | undefined {
-    let text = this.message?.argumentText?.trim();
-    if (text === undefined || text == '') {
+    const text = this.message?.argumentText?.trim();
+    if (text === undefined || text === '') {
       return undefined;
     }
     return text;
@@ -108,9 +129,12 @@ export class EventContext {
    * @param message
    */
   async reply(message: chat_v1.Schema$Message) {
-    message = Object.assign({
-      thread: this.event.message?.thread
-    }, message);
+    message = Object.assign(
+      {
+        thread: this.event.message?.thread,
+      },
+      message
+    );
     return this.transportContext.reply(message);
   }
 
@@ -120,15 +144,19 @@ export class EventContext {
    * @param message
    */
   async updateMessage(message: chat_v1.Schema$Message) {
-    const actionResponseType = this.event.message?.sender?.type === 'HUMAN' ?
-      'UPDATE_USER_MESSAGE_CARDS' :
-      'UPDATE_MESSAGE';
-    message = Object.assign({
-      thread: this.event.message?.thread,
-      actionResponse: {
-        type: actionResponseType
-      }
-    }, message);
+    const actionResponseType =
+      this.event.message?.sender?.type === 'HUMAN'
+        ? 'UPDATE_USER_MESSAGE_CARDS'
+        : 'UPDATE_MESSAGE';
+    message = Object.assign(
+      {
+        thread: this.event.message?.thread,
+        actionResponse: {
+          type: actionResponseType,
+        },
+      },
+      message
+    );
     return this.transportContext.reply(message);
   }
 
@@ -147,7 +175,7 @@ export class EventContext {
             body: body,
           },
         },
-      }
+      },
     });
   }
 
@@ -163,10 +191,10 @@ export class EventContext {
         dialogAction: {
           actionStatus: {
             statusCode: 'OK',
-            userFacingMessage: toast
+            userFacingMessage: toast,
           },
         },
-      }
+      },
     });
   }
 
@@ -176,11 +204,16 @@ export class EventContext {
    *
    * @param message
    */
-  async newMessageInThread(message: chat_v1.Schema$Message): Promise<chat_v1.Schema$Message> {
-    message = Object.assign({
-      thread: this.event.message?.thread
-    }, message);
-    return this.bot.sendMessage(this.event.space?.name!, message);
+  async newMessageInThread(
+    message: chat_v1.Schema$Message
+  ): Promise<chat_v1.Schema$Message> {
+    message = Object.assign(
+      {
+        thread: this.event.message?.thread,
+      },
+      message
+    );
+    return this.bot.sendMessage(this.event.space!.name!, message);
   }
 
   /**
@@ -189,7 +222,9 @@ export class EventContext {
    *
    * @param message
    */
-  async newMessageInSpace(message: chat_v1.Schema$Message): Promise<chat_v1.Schema$Message> {
-    return this.bot.sendMessage(this.event.space?.name!, message);
+  async newMessageInSpace(
+    message: chat_v1.Schema$Message
+  ): Promise<chat_v1.Schema$Message> {
+    return this.bot.sendMessage(this.event.space!.name!, message);
   }
 }

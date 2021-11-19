@@ -26,8 +26,6 @@ const debug = Debug('chat:transport');
  */
 export interface TransportEvents {
   messageReceived: TransportEventContext;
-  sendMessage: chat_v1.Schema$Message;
-  messageSent: chat_v1.Schema$Message;
   error: Error;
 }
 
@@ -86,7 +84,6 @@ export class BaseTransport
     message: chat_v1.Schema$Message,
     options?: Partial<SendOptions>
   ): Promise<chat_v1.Schema$Message> {
-    await this.emit('sendMessage', message);
     const request: chat_v1.Params$Resource$Spaces$Messages$Create =
       Object.assign(
         {
@@ -97,7 +94,6 @@ export class BaseTransport
       );
     debug('Sending async message: %O', request);
     const res = await chatApiClient.spaces.messages.create(request);
-    await this.emit('messageSent', res.data);
     return res.data;
   }
 }

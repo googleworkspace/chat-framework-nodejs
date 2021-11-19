@@ -15,15 +15,17 @@
  */
 
 import express from 'express';
-import { jwtVerify } from 'jose/jwt/verify';
-import { createRemoteJWKSet } from 'jose/jwks/remote';
+import {jwtVerify} from 'jose/jwt/verify';
+import {createRemoteJWKSet} from 'jose/jwks/remote';
 import Debug from 'debug';
 import {URL} from 'url';
 
 const debug = Debug('chat:transport');
 
 const CHAT_JWT_ISSUER = 'chat@system.gserviceaccount.com';
-const JWKS = createRemoteJWKSet(new URL(`https://www.googleapis.com/robot/v1/metadata/jwk/${CHAT_JWT_ISSUER}`))
+const JWKS = createRemoteJWKSet(
+  new URL(`https://www.googleapis.com/robot/v1/metadata/jwk/${CHAT_JWT_ISSUER}`)
+);
 
 /**
  * Express middleware for authenticating chat requests.
@@ -42,10 +44,10 @@ export function authenticateRequest(
       return;
     }
     try {
-      const { payload } = await jwtVerify(jwt, JWKS, {
+      const {payload} = await jwtVerify(jwt, JWKS, {
         issuer: CHAT_JWT_ISSUER,
-        audience: audience
-      })
+        audience: audience,
+      });
       debug('Decoded JWT: %O', payload);
     } catch (err) {
       debug('Unable to authenticate request: %O', err);

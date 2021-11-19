@@ -18,10 +18,12 @@ import {TransportEventContext, BaseTransport} from '..';
 import {PubSub, Message, Subscription} from '@google-cloud/pubsub';
 import assert from 'assert';
 import {chat_v1} from '@googleapis/chat';
-import {Event} from "../../types/event";
+import {Event} from '../../types/event';
 import Debug from 'debug';
 
 const debug = Debug('chat:transport');
+
+const SUBSCRIPTION_NAME_ENV_KEY = 'GOOGLE_CHAT_SUBSCRIPTION_NAME';
 
 /**
  * Options for configuring the pubsub transport
@@ -30,13 +32,6 @@ export interface PubSubOptions {
   /** Name of the subscription to listen on */
   subscriptionName: string | undefined;
 }
-
-/**
- * Default options.
- */
-const DEFAULT_OPTIONS = {
-  subscriptionName: undefined,
-};
 
 /**
  * Wraps the pubsub event for dispatching.
@@ -60,29 +55,27 @@ class PubSubEvent implements TransportEventContext {
 
   async reply(message: chat_v1.Schema$Message): Promise<void> {
     debug('Replying with payload: %O', message);
+    assert(this.event.space?.name);
     this.ack();
-    await this.adapter.emit('sendMessage', message);
-    try {
-      assert(this.event.space?.name);
-      await this.adapter.sendAsync(this.event.space?.name, message);
-    } finally {
-      await this.adapter.emit('messageSent', message);
-    }
+    await this.adapter.sendAsync(this.event.space?.name, message);
   }
 }
 
 /**
  * Pubsub-based implementation of transport.
  */
-export class PubSubTransport extends BaseTransport  {
+export class PubSubTransport extends BaseTransport {
   private options: PubSubOptions;
   private pubSubClient: PubSub;
   private subscription: Subscription | undefined;
 
-  constructor(options: Partial<PubSubOptions>) {
+  constructor(options?: Partial<PubSubOptions>) {
     super();
     this.pubSubClient = new PubSub();
-    this.options = Object.assign({}, DEFAULT_OPTIONS, options);
+    const defaultOpts = {
+      subscriptionName: process.env[SUBSCRIPTION_NAME_ENV_KEY] ?? undefined,
+    };
+    this.options = Object.assign({}, defaultOpts, options ?? {});
   }
 
   async start() {

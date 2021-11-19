@@ -19,10 +19,11 @@ import http from 'http';
 import {BaseTransport, TransportEventContext} from '..';
 import bearerToken from 'express-bearer-token';
 import assert from 'assert';
-import {Event} from "../../types/event";
+import {Event} from '../../types/event';
 import Debug from 'debug';
-import {authenticateRequest} from "./auth";
-import { chat_v1 } from '@googleapis/chat';
+import {authenticateRequest} from './auth';
+import {chat_v1} from '@googleapis/chat';
+import gcpMetadata from 'gcp-metadata';
 
 const debug = Debug('chat:transport');
 
@@ -36,7 +37,8 @@ export interface HttpOptions {
   path: string;
   /** Whether or not app is behind a proxy and should trust X-Forward-For headers */
   trustProxy: boolean;
-  /** Project # for bot to validate JWTs */
+  /** Project # for bot to validate JWTs. If unspecified and the environment variable
+   * GOOGLE_CHAT_PROJECT_NUMBER is unset, no authentication is performed. */
   projectNumber: number | string | undefined;
 }
 
@@ -44,20 +46,46 @@ export interface HttpOptions {
  * Default options.
  */
 const DEFAULT_OPTIONS = {
-  port: 3000,
+  port: 8080,
   path: '/',
   trustProxy: true,
   projectNumber: undefined,
 };
+
+const PROJECT_NUMBER_ENV_KEY = 'PROJECT_NUMBER';
+const PORT_NUMBER_ENV_KEY = 'PORT';
+
+/**
+ * Attempts to autoconfigure the transport based on the environment (e.g. GCP metadata + env vars)
+ */
+async function autoconfigure(): Promise<HttpOptions> {
+  const options: HttpOptions = {...DEFAULT_OPTIONS};
+  const hasMetadata = await gcpMetadata.isAvailable();
+  if (hasMetadata) {
+    // If on GCP, fetch project # for verifying JWTs
+    const projectId = await gcpMetadata.project('numeric-project-id');
+    options.projectNumber = Number(projectId);
+  } else if (process.env[PROJECT_NUMBER_ENV_KEY]) {
+    options.projectNumber = Number(process.env[PROJECT_NUMBER_ENV_KEY]);
+  }
+  if (process.env[PORT_NUMBER_ENV_KEY]) {
+    options.port = Number(process.env[PORT_NUMBER_ENV_KEY]);
+  }
+  return options;
+}
 
 /**
  * Wraps the request/response for dispatching as an event.
  */
 class HttpEvent implements TransportEventContext {
   readonly event: Event;
-  private sent = false
+  private sent = false;
 
-  constructor(private transport: HttpTransport, private req: Request, private res: Response) {
+  constructor(
+    private transport: HttpTransport,
+    private req: Request,
+    private res: Response
+  ) {
     this.event = this.req.body as Event;
   }
 
@@ -72,17 +100,12 @@ class HttpEvent implements TransportEventContext {
 
   async reply(message: chat_v1.Schema$Message): Promise<void> {
     debug('Replying to message with payload: %O', message);
-    await this.transport.emit('sendMessage', message);
-    try {
-      if (this.sent) {
-        assert(this.event.space?.name);
-        await this.transport.sendAsync(this.event.space?.name, message);
-      } else {
-        this.sent = true;
-        this.res.status(200).json(message);
-      }
-    } finally {
-      await this.transport.emit('messageSent', message);
+    if (this.sent) {
+      assert(this.event.space?.name);
+      await this.transport.sendAsync(this.event.space?.name, message);
+    } else {
+      this.sent = true;
+      this.res.status(200).json(message);
     }
   }
 }
@@ -95,20 +118,29 @@ export class HttpTransport extends BaseTransport {
   readonly app = express();
   /** Router specific to the bot. Middleware is enabled here instead of the app. */
   readonly router = express.Router();
-  private readonly options: HttpOptions;
+  private options: HttpOptions | undefined;
   private server: http.Server | undefined;
 
   constructor(options?: Partial<HttpOptions>) {
     super();
-    this.options = Object.assign({}, DEFAULT_OPTIONS, options ?? {});
-    this.app.set('trust proxy', this.options.trustProxy);
+    if (options) {
+      this.options = Object.assign({}, DEFAULT_OPTIONS, options);
+      this.deferredInit(this.options);
+    }
+  }
+
+  private deferredInit(options: HttpOptions) {
+    this.app.set('trust proxy', options.trustProxy);
+    this.app.use(options.path, this.router);
     this.router.use(express.json());
     this.router.use(bearerToken());
 
-    if (this.options.projectNumber === undefined) {
-      console.log("WARNING: Project number is not configured, authentication of messages is disabled.");
+    if (options.projectNumber === undefined) {
+      console.log(
+        'WARNING: Project number is not configured, authentication of messages is disabled.'
+      );
     } else {
-      this.router.use(authenticateRequest(this.options.projectNumber));
+      this.router.use(authenticateRequest(options.projectNumber));
     }
 
     this.router.post('/', async (req, res) => {
@@ -122,18 +154,21 @@ export class HttpTransport extends BaseTransport {
         res.status(500).json(err);
       }
     });
-
-    this.app.use(this.options.path, this.router);
   }
 
   async start() {
     debug('Starting HTTPS transport');
+    if (!this.options) {
+      this.options = await autoconfigure();
+      this.deferredInit(this.options);
+    }
+    const port = this.options!.port;
     return new Promise<void>((resolve, reject) => {
-      this.server = this.app.listen(this.options.port, () => {
-        if (arguments.length && arguments[0]) {
-          return reject(arguments[0]);
+      this.server = this.app.listen(port, (...args: unknown[]) => {
+        if (args.length && args[0]) {
+          return reject(args[0]);
         }
-        console.log('Running on port %d', this.options.port);
+        console.log('Running on port %d', port);
         console.log('Press CTRL-C to stop\n');
         resolve();
       });
@@ -144,7 +179,7 @@ export class HttpTransport extends BaseTransport {
     debug('Stopping HTTPS transport');
     if (this.server) {
       return new Promise<void>((resolve, reject) => {
-        this.server!.close((err) => {
+        this.server!.close(err => {
           if (err) {
             return reject(err);
           }
