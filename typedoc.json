@@ -1,9 +1,12 @@
 {
     "out": "docs/reference",
+    "name": "Google Chat SDK",
     "theme": "default",
     "excludePrivate": true,
     "excludeProtected":  true,
-    "entryPointStrategy": "packages",
+    "entryPointStrategy": "Packages",
     "exclude": "*.spec.ts",
-    "excludeExternals": false
+    "excludeExternals": false,
+    "excludeInternal": true,
+    "cleanOutputDir": true
 }

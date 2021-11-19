@@ -9,7 +9,7 @@
     "compile:watch": "concurrently npm:watch-*",
     "watch-core": "npm run compile:watch -w '@google/chat-sdk'",
     "watch-df": "npm run compile:watch -w '@google/chat-sdk-dialogflow'",
-    "docs": "typedoc packages/*"
+    "docs": "typedoc -readme none packages/*"
   },
   "workspaces": [
     "./packages/*",
