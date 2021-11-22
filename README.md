@@ -102,7 +102,7 @@ Note: PubSub bots do not currently support all features and may have issues with
 cards and dialogs.
 
 You can also implement your own transport (e.g. a fake for testing) by implementing the
-[`Transport`[docs/reference/interfaces/_google_chat_sdk.Transport.md] interface and
+[`Transport`](docs/reference/interfaces/google_chat_sdk.Transport.md) interface and
 setting the transport via the `bot.transport` property.
 
 If either `Bot.http()` or `Bot.pubsub()` are called without options, the bot will attempt to autoconfigure
@@ -123,7 +123,7 @@ Add event handlers to the bot to respond to user interactions. The bot framework
 detects the type of event based on the event type and message content and dispatches
 the event to the appropriate handler.
 
-Handlers are called with a [context](docs/reference/classes/_google_chat_sdk.eventContext.md) object
+Handlers are called with a [context](docs/reference/classes/google_chat_sdk.EventContext.md) object
 that provides quick access to common fields in the event along with methods for replying to, creating, and updating
 messages and dialogs.
 
