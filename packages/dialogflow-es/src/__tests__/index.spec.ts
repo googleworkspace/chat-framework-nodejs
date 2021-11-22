@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
-  preset: 'ts-jest',
-  testMatch: ['**/__tests__/**/*.spec.ts'],
-  testEnvironment: 'node',
-  collectCoverage: true,
-};
+test('TODO', async () => {});
