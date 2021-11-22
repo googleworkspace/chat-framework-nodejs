@@ -37,7 +37,7 @@ export interface LifecycleEvents {
   started: void;
   stopped: void;
   eventReceived: EventContext; // Before an event is dispatched
-  error: Error; // Unhandled exception during dispatch
+  error: unknown; // Unhandled exception during dispatch
 }
 
 /**
@@ -222,6 +222,7 @@ export class Bot {
    *
    * or by name:
    *
+   * ```typescript
    * bot.command('/poll', ctx => {
    *   /// ...
    * });

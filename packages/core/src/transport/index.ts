@@ -26,7 +26,7 @@ const debug = Debug('chat:transport');
  */
 export interface TransportEvents {
   messageReceived: TransportEventContext;
-  error: Error;
+  error: unknown;
 }
 
 export interface SendOptions {
