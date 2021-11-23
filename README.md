@@ -26,7 +26,7 @@ Some notable features:
 
 ## Why doesn't it have a catchy name?
 
-It's still new and we're trying to see how much traction it gets. But if you have a great name
+It's still new, and we're trying to see how much traction it gets. But if you have a great name
 in mind, let us know!
 
 ## Help wanted
@@ -40,7 +40,7 @@ We'd love to hear your feedback as well as  accept
 * Plugins for common functionality like analytics and observability.
 * Better documentation and more examples
 
-Or just build things with it and give us your feedback!
+Or just build things with it and give us your feedback and let us know what you've made!
 
 ## Getting started - an echo bot
 
