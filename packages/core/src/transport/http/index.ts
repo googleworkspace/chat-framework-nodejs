@@ -23,7 +23,7 @@ import {Event} from '../../types/event';
 import Debug from 'debug';
 import {authenticateRequest} from './auth';
 import {chat_v1} from '@googleapis/chat';
-import gcpMetadata from 'gcp-metadata';
+import * as gcpMetadata from 'gcp-metadata';
 
 const debug = Debug('chat:transport');
 
