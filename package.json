@@ -16,7 +16,7 @@
     "./examples/*"
   ],
   "dependencies": {
-    "concurrently": "^6.2.1",
+    "concurrently": "6.4.0",
     "typedoc": "^0.22.8",
     "typedoc-plugin-markdown": "^3.11.7"
   }
