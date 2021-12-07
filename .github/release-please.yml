@@ -1,3 +1,6 @@
-releaseType: node-workspace
+releaseType: node
 handleGHRelease: true
 monorepoTags: true
+plugins:
+  - node-workspace
+alwaysLinkLocal: true

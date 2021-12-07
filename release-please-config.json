@@ -1,0 +1,10 @@
+{
+  "plugins": ["node-workspace"],
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "release-as": "",
+  "packages": {
+    "packages/core": { "release-as": "" },
+    "packages/dialogflow-es": { "release-as": "" }
+  }
+}
