@@ -1,0 +1,6 @@
+plugins:
+  - node-workspace
+releaseType: node
+manifest: true,
+bumpMinorPreMajor: true,
+handleGHRelease: true
