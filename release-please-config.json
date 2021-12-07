@@ -1,5 +1,6 @@
 {
   "plugins": ["node-workspace"],
+  "manifest": true,
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
   "release-as": "",
