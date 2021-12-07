@@ -9,6 +9,5 @@ jobs:
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v2
         with:
-        with:
           command: manifest
           token: ${{ secrets.GITHUB_TOKEN }}
