@@ -35,7 +35,7 @@
     "@types/supertest": "^2.0.11",
     "deepmerge": "^4.2.2",
     "@types/deepmerge": "^2.2.0",
-    "type-fest": "^2.5.2"
+    "type-fest": "0.21.3"
   },
   "dependencies": {
     "jose": "^3.19.0",
