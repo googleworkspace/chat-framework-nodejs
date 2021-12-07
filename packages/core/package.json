@@ -38,7 +38,7 @@
     "type-fest": "2.8.0"
   },
   "dependencies": {
-    "jose": "^3.19.0",
+    "jose": "^4.0.0",
     "@google-cloud/pubsub": "^2.15.1",
     "auto-bind": "^4.0.0",
     "await-event-emitter": "^2.0.2",
