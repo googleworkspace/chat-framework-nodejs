@@ -1,5 +1,6 @@
 {
   "plugins": ["node-workspace"],
+  "bootstrap-sha": "412196a6ff8bb57697733b2216f7509d61cfdbbe",
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
   "packages": {
