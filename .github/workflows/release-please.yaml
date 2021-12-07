@@ -10,4 +10,3 @@ jobs:
       - uses: GoogleCloudPlatform/release-please-action@v2
         with:
           command: manifest-pr
-          token: ${{ secrets.GITHUB_TOKEN }}
