@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "",
   "main": "build/src/index.js",
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "/build"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint src/**/*.ts",

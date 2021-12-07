@@ -6,6 +6,9 @@
   "engines": {
     "node": ">= 12"
   },
+  "files": [
+    "/build"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint src/**/*.ts",
