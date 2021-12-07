@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "concurrently": "6.4.0",
-    "typedoc": "^0.22.8",
+    "typedoc": "0.22.10",
     "typedoc-plugin-markdown": "^3.11.7"
   }
 }
