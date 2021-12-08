@@ -11,6 +11,6 @@
     "examples/giphy": {},
     "examples/hello-http": {},
     "examples/hello-pubsub": {},
-    "examples/hello-poll": {}
+    "examples/poll": {}
   }
 }
