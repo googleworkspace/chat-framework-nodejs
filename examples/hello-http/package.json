@@ -1,6 +1,6 @@
 {
   "name": "google-chat-nodejs-hello-http",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Minimal 'Hello world' Google Chat bot",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "@google/chat-sdk": "0.1",
+    "@google/chat-sdk": "^0.2.0",
     "ts-node": "^10.2.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk-example-dialogflow",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Example Google Chat bot using dialogflow",
   "scripts": {
     "start": "DEBUG=chat:* nodemon -r ts-node src/index.ts",
@@ -11,7 +11,6 @@
     "fix": "eslint --fix src/**/*.ts",
     "pretest": "npm run compile",
     "posttest": "npm run lint"
-
   },
   "author": "",
   "license": "Apache-2.0",
@@ -23,8 +22,8 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "@google/chat-sdk": "0.1",
-    "@google/chat-sdk-dialogflow": "0.1",
+    "@google/chat-sdk": "^0.2.0",
+    "@google/chat-sdk-dialogflow": "^0.2.0",
     "concurrently": "^6.2.1",
     "gts": "^3.1.0",
     "ts-node": "^10.2.1"
