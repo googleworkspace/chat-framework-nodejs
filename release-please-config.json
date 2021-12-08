@@ -4,7 +4,12 @@
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
   "packages": {
-    "packages/core": { "release-as": "" },
-    "packages/dialogflow-es": { "release-as": "" }
+    "packages/core": {},
+    "packages/dialogflow-es": {},
+    "examples/dialogflow": {},
+    "examples/giphy": {},
+    "examples/hello-http": {},
+    "examples/hello-pubsub": {},
+    "examples/hello-poll": {}
   }
 }
