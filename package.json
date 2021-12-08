@@ -6,8 +6,8 @@
     "lint": "npm run lint --workspaces",
     "fix": "npm run fix --workspaces",
     "clean": "npm run clean --workspaces",
-    "compile": "npm run compile --workspaces",
-    "compile:watch": "concurrently npm:watch-*",
+    "build": "npm run compile --workspaces",
+    "build:watch": "concurrently npm:watch-*",
     "watch-core": "npm run compile:watch -w '@google/chat-sdk'",
     "watch-df": "npm run compile:watch -w '@google/chat-sdk-dialogflow'",
     "docs": "typedoc -readme none packages/*"
