@@ -1,4 +1,5 @@
 on:
+  workflow_dispatch:
   release:
     types: [created]
 name: release
@@ -11,9 +12,8 @@ jobs:
         with:
           node-version: 14
           registry-url: 'https://wombat-dressing-room.appspot.com'
-      - run: |
-          npm ci
-          npm compile
-          npm publish --workspace packages
+      - run: npm ci
+      - run: npm compile
+      - run: npm publish --workspace packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.WOMBAT_DRESSING_ROOM_TOKEN}}
