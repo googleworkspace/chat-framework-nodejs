@@ -1,8 +1,7 @@
 {
   "name": "@google/chat-sdk-example-dialogflow",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.mjs",
+  "description": "Example Google Chat bot using dialogflow",
   "scripts": {
     "start": "DEBUG=chat:* nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",

@@ -1,8 +1,7 @@
 {
   "name": "google-chat-nodejs-hello-pubsub",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "description": "Minimal 'Hello world' Google Chat bot",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",

@@ -1,8 +1,7 @@
 {
   "name": "@google/chat-sdk-example-poll",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.mjs",
+  "description": "Example Google Chat bot for quick surveys",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",
