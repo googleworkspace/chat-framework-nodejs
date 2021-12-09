@@ -11,10 +11,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: 'https://wombat-dressing-room.appspot.com'
       - run: npm i -g npm@latest
       - run: npm ci
       - run: npm run build
-      - run: npm publish --workspace packages
+      - run: npm publish --registry https://wombat-dressing-room.appspot.com --workspace packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.WOMBAT_DRESSING_ROOM_TOKEN}}
