@@ -17,6 +17,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           registry-url: 'https://wombat-dressing-room.appspot.com'
-      - run: npm publish --workspace packages
+      - run: npm publish --access=public --workspace packages
         env:
           NODE_AUTH_TOKEN: ${{secrets.WOMBAT_DRESSING_ROOM_TOKEN}}
