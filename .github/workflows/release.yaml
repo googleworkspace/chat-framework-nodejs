@@ -16,4 +16,4 @@ jobs:
       - run: npm run build
       - run: npm publish --registry https://wombat-dressing-room.appspot.com --workspace packages
         env:
-          NODE_AUTH_TOKEN: ${{secrets.WOMBAT_DRESSING_ROOM_TOKEN}}
+          NODE_TOKEN: ${{secrets.WOMBAT_DRESSING_ROOM_TOKEN}}
