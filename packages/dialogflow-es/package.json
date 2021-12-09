@@ -2,6 +2,7 @@
   "name": "@google/chat-sdk-dialogflow",
   "version": "0.2.1",
   "description": "Add-on to @google/chat-sdk to delegate conversational chats to Dialogflow.",
+  "repository":"googleworkspace/chat-framework-nodejs",
   "main": "build/src/index.js",
   "engines": {
     "node": ">= 12"

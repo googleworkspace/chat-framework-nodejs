@@ -2,6 +2,7 @@
   "name": "@google/chat-sdk-example-dialogflow",
   "version": "0.2.1",
   "description": "Example Google Chat bot using dialogflow",
+  "repository":"googleworkspace/chat-framework-nodejs",
   "scripts": {
     "start": "DEBUG=chat:* nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",

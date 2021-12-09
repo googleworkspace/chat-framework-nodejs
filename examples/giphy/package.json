@@ -2,6 +2,7 @@
   "name": "@google/chat-sdk-example-giphy",
   "version": "0.2.1",
   "description": "Example Google Chat meme bot using the Giphy API",
+  "repository":"googleworkspace/chat-framework-nodejs",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",

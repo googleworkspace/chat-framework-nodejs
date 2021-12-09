@@ -2,6 +2,7 @@
   "name": "@google/chat-sdk",
   "version": "0.2.1",
   "description": "Lightweight framework for building bots and apps for Google Chat.",
+  "repository":"googleworkspace/chat-framework-nodejs",
   "main": "build/src/index.js",
   "engines": {
     "node": ">= 12"

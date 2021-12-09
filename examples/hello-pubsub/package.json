@@ -2,6 +2,7 @@
   "name": "google-chat-nodejs-hello-pubsub",
   "version": "0.2.1",
   "description": "Minimal 'Hello world' Google Chat bot",
+  "repository":"googleworkspace/chat-framework-nodejs",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",
