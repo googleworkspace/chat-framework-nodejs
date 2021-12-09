@@ -17,13 +17,9 @@ import request from 'supertest';
 
 // Mock key fetching to test auth. Allows generating JWTs similar to chat.
 jest.mock('jose/jwks/remote');
-import {createRemoteJWKSet} from 'jose/jwks/remote';
-import {generateKeyPair} from 'jose/util/generate_key_pair';
-import {SignJWT} from 'jose/jwt/sign';
-import {KeyObject} from 'crypto';
-
-let publicKey: KeyObject | CryptoKey;
-let privateKey: KeyObject | CryptoKey;
+import {createRemoteJWKSet, KeyLike, generateKeyPair, SignJWT} from 'jose';
+let publicKey: KeyLike;
+let privateKey: KeyLike;
 
 async function makeJwt(payload = {}) {
   return await new SignJWT(

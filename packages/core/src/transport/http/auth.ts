@@ -15,8 +15,8 @@
  */
 
 import express from 'express';
-import {jwtVerify} from 'jose/jwt/verify';
-import {createRemoteJWKSet} from 'jose/jwks/remote';
+import {jwtVerify} from 'jose';
+import {createRemoteJWKSet} from 'jose';
 import Debug from 'debug';
 import {URL} from 'url';
 
