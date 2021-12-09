@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk-example-poll",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Example Google Chat bot for quick surveys",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "@google/chat-sdk": "^0.2.0",
+    "@google/chat-sdk": "^0.2.1",
     "ts-node": "^10.2.1"
   }
 }
