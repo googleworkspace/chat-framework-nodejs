@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk-example-giphy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Example Google Chat meme bot using the Giphy API",
   "scripts": {
     "start": "nodemon -r ts-node src/index.ts",
@@ -24,7 +24,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "giphy-api": "^2.0.2",
-    "@google/chat-sdk": "^0.2.0",
+    "@google/chat-sdk": "^0.2.1",
     "concurrently": "^6.2.1",
     "ts-node": "^10.2.1"
   }

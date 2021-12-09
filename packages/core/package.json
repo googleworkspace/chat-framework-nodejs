@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lightweight framework for building bots and apps for Google Chat.",
   "main": "build/src/index.js",
   "engines": {
