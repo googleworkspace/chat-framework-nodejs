@@ -82,6 +82,8 @@ bot.start();
 See the [Google Chat bot documentation](https://developers.google.com/chat/how-tos/bots-publish#enable_the_google_chat_api)
 for instructions on how to register your bot.
 
+You can also experiment on [glitch.com](https://glitch.com) by remixing [this project](https://glitch.com/edit/#!/bald-gold-vole?path=server.js%3A14%3A12)
+
 ## Configuring transports
 
 The framework supports both HTTPS and Cloud PubSub transports.
