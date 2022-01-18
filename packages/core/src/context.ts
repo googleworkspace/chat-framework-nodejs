@@ -139,7 +139,7 @@ export class EventContext extends Emittery<Events> {
   }
 
   /**
-   * For interactive cards and unfurl requests, performans an in-place update of message that triggered this event.
+   * For interactive cards and unfurl requests, performs an in-place update of message that triggered this event.
    *
    * @param message
    */

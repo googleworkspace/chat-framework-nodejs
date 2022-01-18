@@ -272,7 +272,7 @@ the message content itself.
 
 ## Sending unsolicited events
 
-THe `bot.sendMessage()` event can be used to send an unsolicited message to a space, such as when
+The `bot.sendMessage()` event can be used to send an unsolicited message to a space, such as when
 notifying the user about an external event. This method is a wrapper around the chat
 API and is bound to the bot's configured identity.
 

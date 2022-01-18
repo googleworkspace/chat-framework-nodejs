@@ -28,7 +28,10 @@
     "pretest": "npm run compile",
     "posttest": "npm run lint"
   },
-  "keywords": [],
+  "keywords": [
+    "google-chat",
+    "bot"
+  ],
   "author": "",
   "license": "Apache2.0",
   "devDependencies": {

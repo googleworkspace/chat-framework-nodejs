@@ -28,7 +28,11 @@
     "pretest": "npm run compile",
     "posttest": "npm run lint"
   },
-  "keywords": [],
+  "keywords": [
+    "google-chat",
+    "bot",
+    "dialogflow"
+  ],
   "author": "",
   "license": "Apache2.0",
   "devDependencies": {

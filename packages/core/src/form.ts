@@ -72,7 +72,7 @@ export class FormInputValue {
       return defaultValue;
     }
     if (this.value?.stringInputs) {
-      let value = this.value.stringInputs.value?.[0];
+      const value = this.value.stringInputs.value?.[0];
       if (value === undefined) {
         return defaultValue;
       }
@@ -104,9 +104,9 @@ export class FormInputValue {
  * Utility class for working with form inputs.
  */
 export class FormInputs {
-  private readonly inputs: Record<string,chat_v1.Schema$Inputs>;
+  private readonly inputs: Record<string, chat_v1.Schema$Inputs>;
 
-  constructor(inputs?: Record<string,chat_v1.Schema$Inputs>) {
+  constructor(inputs?: Record<string, chat_v1.Schema$Inputs>) {
     this.inputs = inputs ?? {};
   }
 
