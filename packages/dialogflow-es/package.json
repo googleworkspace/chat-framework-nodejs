@@ -47,7 +47,7 @@
     "@types/supertest": "2.0.11"
   },
   "dependencies": {
-    "@google/chat-sdk": "^0.2.2",
+    "@google/chat-sdk": "^0.2.3",
     "@google-cloud/dialogflow": "^4.4.0",
     "debug": "^4.3.2",
     "pb-util": "^1.0.1",
