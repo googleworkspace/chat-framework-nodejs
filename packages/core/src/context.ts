@@ -15,7 +15,7 @@
  */
 
 import {chat_v1} from '@googleapis/chat';
-import {TransportEventContext} from './transport';
+import {SendOptions, TransportEventContext} from './transport';
 import {Event} from './types/event';
 import {FormInputs} from './form';
 import {Bot} from './bot';
@@ -221,10 +221,12 @@ export class EventContext extends Emittery<Events> {
    * to the current event.
    *
    * @param message
+   * @param options
    */
   async newMessageInSpace(
-    message: chat_v1.Schema$Message
+    message: chat_v1.Schema$Message,
+    options?: Partial<SendOptions>
   ): Promise<chat_v1.Schema$Message> {
-    return this.bot.sendMessage(this.event.space!.name!, message);
+    return this.bot.sendMessage(this.event.space!.name!, message, options);
   }
 }
