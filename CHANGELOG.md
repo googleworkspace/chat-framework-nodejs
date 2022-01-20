@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.3](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-repo-v0.2.2...chat-sdk-repo-v0.2.3) (2022-01-20)
+
+
+### Bug Fixes
+
+* Add options to newMessageInSpace to allow threadkey ([9c19ec7](https://github.com/googleworkspace/chat-framework-nodejs/commit/9c19ec78b3751c8f5e27ea75c9a7c57fd5302228))
+
 ### [0.2.2](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-repo-v0.2.1...chat-sdk-repo-v0.2.2) (2021-12-09)
 
 
