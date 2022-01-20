@@ -146,7 +146,8 @@ describe('With message event', () => {
       'spaces/-oMssgAAAAE',
       expect.not.objectContaining({
         thread: expect.anything(),
-      })
+      }),
+      undefined
     );
   });
 });
