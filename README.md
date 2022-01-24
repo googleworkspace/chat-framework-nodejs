@@ -210,7 +210,7 @@ bot.action('submit', async (ctx) => {
 })
 ```
 
-### Link unfurling (launching soon!)
+### Link unfurling
 
 For bots that have configured URLs to unfurl in the developer console, use the
 `bot.unfurl()` method to handle unfurl requests. A bot can use either a single generic handler
