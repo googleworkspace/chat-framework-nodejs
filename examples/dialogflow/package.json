@@ -32,7 +32,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "@google/chat-sdk": "^0.2.3",
-    "@google/chat-sdk-dialogflow": "^0.2.2",
+    "@google/chat-sdk-dialogflow": "^0.2.3",
     "concurrently": "^6.2.1",
     "gts": "^3.1.0",
     "ts-node": "^10.2.1"
