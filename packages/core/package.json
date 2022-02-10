@@ -16,7 +16,8 @@
     "node": ">= 12"
   },
   "files": [
-    "/build"
+    "/build",
+    "README.md"
   ],
   "scripts": {
     "test": "jest",

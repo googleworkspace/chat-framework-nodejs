@@ -6,42 +6,6 @@ Note: This is not an official Google product.
 
 This is an experimental framework for building [Google Chat bots](https://developers.google.com/chat/concepts) using Node.js.
 
-## Why use this?
-
-The framework aims to reduce the amount of boilerplate code in bots and make it
-easier to focus on your bot's features.
-
-Some notable features:
-
-* Better message routing. The framework parses incoming messages and routes them
-  depending on the type of event and content. Bots only need to listen for specific
-  events that are important to them.
-* Easier to do the right thing. Built-in support for authenticating incoming messages
-  and context-aware helps keep things simple and correct.
-* Build hybrid bots that support slash commands, dialogs, and conversational interfaces.
-  Use the add-on `@google/chat-sdk-dialogflow` package to delegate conversational
-  interactions to Dialogflow while also support more app-like interactions with
-  slash commands, link unfurling, and other features not easily implemented when
-  using Dialogflow directly.
-
-## Why doesn't it have a catchy name?
-
-It's still new, and we're trying to see how much traction it gets. But if you have a great name
-in mind, let us know!
-
-## Help wanted
-
-We'd love to hear your feedback as well as  accept
-[code contributions](docs/contributing.md). A few ideas of things that would be helpful:
-
-* Starter and template projects, generators, etc.
-* A better plugin mechanism
-* Storage interfaces for persisting conversation state.
-* Plugins for common functionality like analytics and observability.
-* Better documentation and more examples
-
-Or just build things with it and give us your feedback and let us know what you've made!
-
 ## Getting started - an echo bot
 
 1. Create a new project:
@@ -111,13 +75,13 @@ If either `Bot.http()` or `Bot.pubsub()` are called without options, the bot wil
 itself based on the environment.
 
 * `PROJECT_NUMBER` - Project number for validating incoming JWTs. When running on GCP, the bot will also
-attempt to read this from the GCP Metadata API.
+  attempt to read this from the GCP Metadata API.
 * `PORT` - Port number to listen on
 * `GOOGLE_CHAT_SUBSCRIPTION_NAME` - The name of the subscription the bot will receive messages on (pubsub only)
 * `GOOGLE_APPLICATION_CREDENTIALS` - Te bot uses the [application default credentials](https://cloud.google.com/docs/authentication/production)
-mechanism to authenticate itself. When running on GCP, the framework should automatically discover
-its credentials. When running locally or on another cloud, set the `GOOGLE_APPLICATION_CREDENTIALS`
-environment variable to the service account credentials for the bot.
+  mechanism to authenticate itself. When running on GCP, the framework should automatically discover
+  its credentials. When running locally or on another cloud, set the `GOOGLE_APPLICATION_CREDENTIALS`
+  environment variable to the service account credentials for the bot.
 
 ## Adding event handlers
 
@@ -210,7 +174,7 @@ bot.action('submit', async (ctx) => {
 })
 ```
 
-### Link unfurling
+### Link unfurling (launching soon!)
 
 For bots that have configured URLs to unfurl in the developer console, use the
 `bot.unfurl()` method to handle unfurl requests. A bot can use either a single generic handler

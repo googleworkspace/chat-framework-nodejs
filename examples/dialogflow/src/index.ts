@@ -32,7 +32,7 @@ const bot = Bot.http({
   projectNumber: parseInt(process.env.GOOGLE_PROJECT_NUMBER),
 });
 
-// Help command
+// Forwards messages to dialogflow
 bot.message(
   dialogflowHandler({
     projectId: process.env.GOOGLE_PROJECT_ID,
