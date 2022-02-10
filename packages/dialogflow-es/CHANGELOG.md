@@ -4,6 +4,20 @@
   * dependencies
     * @google/chat-sdk bumped from ^0.2.2 to ^0.2.3
 
+### [0.2.4](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-dialogflow-v0.2.2...chat-sdk-dialogflow-v0.2.4) (2022-02-10)
+
+
+### Bug Fixes
+
+* Add missing readme.md files to sub-packages ([40fcb6b](https://www.github.com/googleworkspace/chat-framework-nodejs/commit/40fcb6b5790a43a1de59379a8e23a1329ce1702f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @google/chat-sdk bumped from ^0.2.3 to ^0.2.4
+
 ### [0.2.2](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-dialogflow-v0.2.1...chat-sdk-dialogflow-v0.2.2) (2021-12-09)
 
 

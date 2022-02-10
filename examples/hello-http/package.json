@@ -1,6 +1,6 @@
 {
   "name": "google-chat-nodejs-hello-http",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Minimal 'Hello world' Google Chat bot",
   "homepage": "https://github.com/googleworkspace/chat-framework-nodejs",
   "bugs": {
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "@google/chat-sdk": "^0.2.3",
+    "@google/chat-sdk": "^0.2.4",
     "ts-node": "^10.2.1"
   }
 }
