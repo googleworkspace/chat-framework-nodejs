@@ -45,7 +45,7 @@
     "ts-jest": "27.1.3",
     "@types/jest": "27.4.0",
     "supertest": "6.2.2",
-    "@types/supertest": "2.0.11"
+    "@types/supertest": "2.0.12"
   },
   "dependencies": {
     "@google/chat-sdk": "^0.2.4",
