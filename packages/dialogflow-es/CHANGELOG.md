@@ -4,6 +4,26 @@
   * dependencies
     * @google/chat-sdk bumped from ^0.2.2 to ^0.2.3
 
+## [0.2.5](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-dialogflow-v0.2.4...chat-sdk-dialogflow-v0.2.5) (2022-07-07)
+
+
+### Features
+
+* Add method for unsolicited message updates ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
+
+
+### Bug Fixes
+
+* Support message updates for pubsub ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
+* Update urlpolyfill module ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @google/chat-sdk bumped from ^0.2.4 to ^0.2.5
+
 ### [0.2.4](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-dialogflow-v0.2.2...chat-sdk-dialogflow-v0.2.4) (2022-02-10)
 
 
