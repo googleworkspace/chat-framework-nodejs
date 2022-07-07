@@ -1,3 +1,4 @@
+"use strict";
 /*
  * Copyright 2021 Google LLC
  *
@@ -13,33 +14,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import {chat, auth} from '@googleapis/chat';
-import {
-  BaseExternalAccountClient,
-  Compute,
-  JWT,
-  OAuth2Client,
-  UserRefreshClient,
-} from 'googleapis-common';
-import {GoogleAuth, Impersonated} from 'google-auth-library';
-
-export const DEFAULT_AUTH = new auth.GoogleAuth({
-  scopes: ['https://www.googleapis.com/auth/chat.bot'],
-});
-
-export const chatApiClient = chat({
-  version: 'v1',
-  auth: DEFAULT_AUTH,
-});
-
-export type AuthClients =
-  | string
-  | OAuth2Client
-  | JWT
-  | Compute
-  | UserRefreshClient
-  | BaseExternalAccountClient
-  | GoogleAuth
-  | Impersonated
-  | undefined;
+test('TODO', async () => { });
+//# sourceMappingURL=index.spec.js.map

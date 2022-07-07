@@ -19,12 +19,19 @@ import {SendOptions, TransportEventContext} from './transport';
 import {Event} from './types/event';
 import {FormInputs} from './form';
 import {Bot} from './bot';
-import type {URLPatternResult} from './types/urlpattern';
 import Emittery from 'emittery';
 
 export interface Events {
   finish: EventContext;
 }
+
+export interface CardsV2 {
+  cardsV2?: {
+    id: string;
+    card: chat_v1.Schema$GoogleAppsCardV1Card;
+  };
+}
+
 /**
  * Context provided to event handlers. This provides access to the underlying event
  * as well as a set of convenience accessors and methods for commonly used fields
@@ -128,7 +135,7 @@ export class EventContext extends Emittery<Events> {
    *
    * @param message
    */
-  async reply(message: chat_v1.Schema$Message) {
+  async reply(message: chat_v1.Schema$Message & CardsV2) {
     message = Object.assign(
       {
         thread: this.event.message?.thread,
@@ -143,7 +150,7 @@ export class EventContext extends Emittery<Events> {
    *
    * @param message
    */
-  async updateMessage(message: chat_v1.Schema$Message) {
+  async updateMessage(message: chat_v1.Schema$Message & CardsV2) {
     const actionResponseType =
       this.event.message?.sender?.type === 'HUMAN'
         ? 'UPDATE_USER_MESSAGE_CARDS'

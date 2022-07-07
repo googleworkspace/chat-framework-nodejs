@@ -16,7 +16,7 @@
 
 import express, {Request, Response} from 'express';
 import http from 'http';
-import {BaseTransport, TransportEventContext} from '..';
+import {BaseTransport, isUpdate, TransportEventContext} from '..';
 import bearerToken from 'express-bearer-token';
 import assert from 'assert';
 import {Event} from '../../types/event';
@@ -24,6 +24,7 @@ import Debug from 'debug';
 import {authenticateRequest} from './auth';
 import {chat_v1} from '@googleapis/chat';
 import * as gcpMetadata from 'gcp-metadata';
+import {AuthClients, DEFAULT_AUTH} from '../../utils/client';
 
 const debug = Debug('chat:transport');
 
@@ -40,6 +41,8 @@ export interface HttpOptions {
   /** Project # for bot to validate JWTs. If unspecified and the environment variable
    * GOOGLE_CHAT_PROJECT_NUMBER is unset, no authentication is performed. */
   projectNumber: number | string | undefined;
+  /** Credentials used to identify bot. Defaults to ADC if unspecified. */
+  credentials: Promise<AuthClients> | AuthClients | undefined;
 }
 
 /**
@@ -50,6 +53,7 @@ const DEFAULT_OPTIONS = {
   path: '/',
   trustProxy: true,
   projectNumber: undefined,
+  credentials: DEFAULT_AUTH,
 };
 
 const PROJECT_NUMBER_ENV_KEY = 'PROJECT_NUMBER';
@@ -102,6 +106,10 @@ class HttpEvent implements TransportEventContext {
     debug('Replying to message with payload: %O', message);
     if (this.sent) {
       assert(this.event.space?.name);
+      if (isUpdate(message) && this.event.message?.name) {
+        await this.transport.updateAsync(this.event.message.name, message);
+        return;
+      }
       await this.transport.sendAsync(this.event.space?.name, message);
     } else {
       this.sent = true;
@@ -130,6 +138,8 @@ export class HttpTransport extends BaseTransport {
   }
 
   private deferredInit(options: HttpOptions) {
+    this.options = options;
+
     this.app.set('trust proxy', options.trustProxy);
     this.app.use(options.path, this.router);
     this.router.use(express.json());
@@ -154,6 +164,10 @@ export class HttpTransport extends BaseTransport {
         res.status(500).json(err);
       }
     });
+
+    if (options.credentials) {
+      this.auth = Promise.resolve(options.credentials);
+    }
   }
 
   async start() {

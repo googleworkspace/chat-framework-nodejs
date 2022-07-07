@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-import {TransportEventContext, BaseTransport} from '..';
+import {TransportEventContext, BaseTransport, isUpdate} from '..';
 import {PubSub, Message, Subscription} from '@google-cloud/pubsub';
 import assert from 'assert';
 import {chat_v1} from '@googleapis/chat';
 import {Event} from '../../types/event';
 import Debug from 'debug';
+import {AuthClients, DEFAULT_AUTH} from '../../utils/client';
 
 const debug = Debug('chat:transport');
 
 const SUBSCRIPTION_NAME_ENV_KEY = 'GOOGLE_CHAT_SUBSCRIPTION_NAME';
-
 /**
  * Options for configuring the pubsub transport
  */
 export interface PubSubOptions {
   /** Name of the subscription to listen on */
   subscriptionName: string | undefined;
+  /** Credentials used to identify bot. Defaults to ADC if unspecified. */
+  credentials: Promise<AuthClients> | AuthClients | undefined;
 }
 
 /**
@@ -40,7 +42,7 @@ class PubSubEvent implements TransportEventContext {
   readonly event: Event;
   private acknowledged = false;
 
-  constructor(private adapter: PubSubTransport, private message: Message) {
+  constructor(private transport: PubSubTransport, private message: Message) {
     const content = this.message.data.toString('utf-8');
     this.event = JSON.parse(content);
   }
@@ -57,7 +59,11 @@ class PubSubEvent implements TransportEventContext {
     debug('Replying with payload: %O', message);
     assert(this.event.space?.name);
     this.ack();
-    await this.adapter.sendAsync(this.event.space?.name, message);
+    if (isUpdate(message) && this.event.message?.name) {
+      await this.transport.updateAsync(this.event.message.name, message);
+      return;
+    }
+    await this.transport.sendAsync(this.event.space?.name, message);
   }
 }
 
@@ -74,6 +80,7 @@ export class PubSubTransport extends BaseTransport {
     this.pubSubClient = new PubSub();
     const defaultOpts = {
       subscriptionName: process.env[SUBSCRIPTION_NAME_ENV_KEY] ?? undefined,
+      credentials: DEFAULT_AUTH,
     };
     this.options = Object.assign({}, defaultOpts, options ?? {});
   }
@@ -81,6 +88,11 @@ export class PubSubTransport extends BaseTransport {
   async start() {
     debug('Starting pubsub transport');
     assert(this.options.subscriptionName);
+
+    if (this.options.credentials) {
+      this.auth = Promise.resolve(this.options.credentials);
+    }
+
     this.subscription = this.pubSubClient.subscription(
       this.options.subscriptionName
     );

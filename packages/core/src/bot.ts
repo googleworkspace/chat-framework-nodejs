@@ -21,9 +21,7 @@ import {PubSubTransport, PubSubOptions} from './transport/pubsub';
 import autobind from 'auto-bind';
 import {chat_v1} from '@googleapis/chat';
 import Emittery from 'emittery';
-// @ts-ignore
-import {URLPattern} from 'urlpattern-polyfill/dist/index.umd.js';
-import type {URLPatternInit} from './types/urlpattern';
+import 'urlpattern-polyfill';
 import assert from 'assert';
 import Debug from 'debug';
 import {MatchedUrl} from './types/message';
@@ -464,6 +462,21 @@ export class Bot {
   }
 
   /**
+   * Sends an unsolicited request to update an existing message.
+   *
+   * @param spaceName - Resource name of space to message
+   * @param message - Message body
+   * @param options
+   */
+  async updateMessage(
+    messageName: string,
+    message: Partial<chat_v1.Schema$Message>,
+    options?: Partial<SendOptions>
+  ): Promise<chat_v1.Schema$Message> {
+    assert(this.transport);
+    return this.transport.updateAsync(messageName, message, options);
+  }
+  /**
    * Internal event dispatching. Infers the event type based on the underlying
    * event type and presence of fields.
    *
@@ -518,6 +531,7 @@ export class Bot {
       await msg.ack();
       await context.finish();
     } catch (err) {
+      debug(err);
       await this._emitter.emit('error', err);
     }
   }

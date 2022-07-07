@@ -16,10 +16,22 @@
 
 import {Event} from '../types/event';
 import Emittery from 'emittery';
-import {AuthClients, chatApiClient} from '../utils/client';
+import {AuthClients, chatApiClient, DEFAULT_AUTH} from '../utils/client';
 import {chat_v1} from '@googleapis/chat';
 import Debug from 'debug';
 const debug = Debug('chat:transport');
+
+type Entry<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T];
+
+function filterObject<T extends object>(obj: T, keys: Array<keyof T>) {
+  return Object.fromEntries(
+    (Object.entries(obj) as Entry<T>[]).filter(
+      entry => keys.indexOf(entry[0]) !== -1
+    )
+  ) as Partial<T>;
+}
 
 /**
  * Type info for events emitted by transport
@@ -59,6 +71,11 @@ export interface Transport extends PublicEmitterMethods {
     message: chat_v1.Schema$Message,
     options?: Partial<SendOptions>
   ): Promise<chat_v1.Schema$Message>;
+  updateAsync(
+    messageName: string,
+    message: Partial<chat_v1.Schema$Message>,
+    options?: Partial<SendOptions>
+  ): Promise<chat_v1.Schema$Message>;
 }
 
 /**
@@ -68,6 +85,8 @@ export class BaseTransport
   extends Emittery<TransportEvents>
   implements Transport
 {
+  auth: Promise<AuthClients> | undefined = Promise.resolve(DEFAULT_AUTH);
+
   /** Start listening */
   async start() {}
   /** Stop listening */
@@ -89,6 +108,7 @@ export class BaseTransport
         {
           parent: spaceName,
           requestBody: message,
+          auth: await this.auth,
         },
         options
       );
@@ -96,4 +116,44 @@ export class BaseTransport
     const res = await chatApiClient.spaces.messages.create(request);
     return res.data;
   }
+
+  /**
+   * Sends an async message to a space
+   * @param spaceName
+   * @param message
+   * @param options
+   */
+  async updateAsync(
+    messageName: string,
+    message: Partial<chat_v1.Schema$Message>,
+    options?: Partial<SendOptions>
+  ): Promise<chat_v1.Schema$Message> {
+    const keys = ['text', 'cards', 'cardsV2', 'attachments'] as Array<
+      keyof chat_v1.Schema$Message
+    >;
+    const filteredMessage = filterObject(message, keys);
+    const request: chat_v1.Params$Resource$Spaces$Messages$Update =
+      Object.assign(
+        {
+          name: messageName,
+          updateMask: Object.keys(filteredMessage).join(','),
+          requestBody: filteredMessage,
+          auth: await this.auth,
+        },
+        options
+      );
+    debug('Sending async message update: %O', request);
+    const res = await chatApiClient.spaces.messages.update(request);
+    return res.data;
+  }
+}
+
+export function isUpdate(message?: chat_v1.Schema$Message) {
+  if (!message) {
+    return false;
+  }
+  const types = ['UPDATE_MESSAGE', 'UPDATE_USER_MESSAGE_CARDS'];
+  return (
+    message.actionResponse?.type && types.includes(message.actionResponse.type)
+  );
 }
