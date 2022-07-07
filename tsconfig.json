@@ -3,7 +3,8 @@
   "compilerOptions": {
     "declaration": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "es2020",
+    "lib": [ "DOM", "es2020", "es2020.promise", "es2020.bigint", "es2020.string" ]
   },
-  "lib": [ "DOM", "es2019", "es2020.promise", "es2020.bigint", "es2020.string" ]
 }
