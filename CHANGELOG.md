@@ -11,7 +11,7 @@
 ### Bug Fixes
 
 * Support message updates for pubsub ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
-* Update urlpolyfill module ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
+* Update url-pattern polyfill module ([941b7c5](https://github.com/googleworkspace/chat-framework-nodejs/commit/941b7c51723577896fbbc8c02c7e671a503070cc))
 
 ### [0.2.4](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-repo-v0.2.2...chat-sdk-repo-v0.2.4) (2022-02-10)
 
