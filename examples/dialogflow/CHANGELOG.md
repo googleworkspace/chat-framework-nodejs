@@ -5,6 +5,13 @@
     * @google/chat-sdk bumped from ^0.2.2 to ^0.2.3
     * @google/chat-sdk-dialogflow bumped from ^0.2.2 to ^0.2.3
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @google/chat-sdk bumped from ^0.2.4 to ^0.2.5
+    * @google/chat-sdk-dialogflow bumped from ^0.2.4 to ^0.2.5
+
 ### [0.2.4](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-example-dialogflow-v0.2.2...chat-sdk-example-dialogflow-v0.2.4) (2022-02-10)
 
 
