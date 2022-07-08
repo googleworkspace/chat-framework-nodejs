@@ -18,6 +18,7 @@ import {EventContext} from './context';
 import {SendOptions, Transport, TransportEventContext} from './transport';
 import {HttpTransport, HttpOptions} from './transport/http';
 import {PubSubTransport, PubSubOptions} from './transport/pubsub';
+// @ts-ignore
 import autobind from 'auto-bind';
 import {chat_v1} from '@googleapis/chat';
 import Emittery from 'emittery';
