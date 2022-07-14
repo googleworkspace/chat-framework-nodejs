@@ -26,10 +26,10 @@ export interface Events {
 }
 
 export interface CardsV2 {
-  cardsV2?: {
-    id: string;
+  cardsV2?: Array<{
+    id?: string;
     card: chat_v1.Schema$GoogleAppsCardV1Card;
-  };
+  }>;
 }
 
 /**
