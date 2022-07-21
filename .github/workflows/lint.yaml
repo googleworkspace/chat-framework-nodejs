@@ -36,3 +36,4 @@ jobs:
           VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
