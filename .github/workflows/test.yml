@@ -6,7 +6,7 @@ name: Test
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  test:
+  matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,3 +21,8 @@ jobs:
       - run: npm i -g npm@latest
       - run: npm ci
       - run: npm run test --workspaces --if-present
+  test:
+    needs: [matrix]
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Test matrix finished"
