@@ -12,13 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 name: Lint
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request, workflow_dispatch]
+
 jobs:
   lint:
     concurrency:
@@ -34,10 +29,11 @@ jobs:
         env:
           ERROR_ON_MISSING_EXEC_BIT: true
           FILTER_REGEX_EXCLUDE: .*/docs/.*
-          JAVSSCRIPT_DEFAULT_STYLE: prettier
+          JAVASCRIPT_DEFAULT_STYLE: prettier
           TYPESCRIPT_DEFAULT_STYLE: prettier
           VALIDATE_JSCPD: false
           VALIDATE_JAVASCRIPT_STANDARD: false
           VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
