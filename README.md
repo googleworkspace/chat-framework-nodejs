@@ -31,13 +31,13 @@ in mind, let us know!
 
 ## Help wanted
 
-We'd love to hear your feedback as well as  accept
+We'd love to hear your feedback as well as accept
 [code contributions](docs/contributing.md). A few ideas of things that would be helpful:
 
 * Starter and template projects, generators, etc.
 * A better plugin mechanism
-* Storage interfaces for persisting conversation state.
-* Plugins for common functionality like analytics and observability.
+* Storage interfaces for persisting conversation state
+* Plugins for common functionality like analytics and observability
 * Better documentation and more examples
 
 Or just build things with it and give us your feedback and let us know what you've made!
@@ -114,7 +114,7 @@ itself based on the environment.
 attempt to read this from the GCP Metadata API.
 * `PORT` - Port number to listen on
 * `GOOGLE_CHAT_SUBSCRIPTION_NAME` - The name of the subscription the bot will receive messages on (pubsub only)
-* `GOOGLE_APPLICATION_CREDENTIALS` - Te bot uses the [application default credentials](https://cloud.google.com/docs/authentication/production)
+* `GOOGLE_APPLICATION_CREDENTIALS` - The bot uses the [application default credentials](https://cloud.google.com/docs/authentication/production)
 mechanism to authenticate itself. When running on GCP, the framework should automatically discover
 its credentials. When running locally or on another cloud, set the `GOOGLE_APPLICATION_CREDENTIALS`
 environment variable to the service account credentials for the bot.
@@ -133,7 +133,7 @@ Note that the context object can be safely destructured if desired.
 
 ### Handling @ mentions and DM messages
 
-Register a message handler using `bot.message()` method. THe handler will be invoked
+Register a message handler using `bot.message()` method. The handler will be invoked
 for any message that @ mentions the bot or user text in a DM. For example:
 
 ```typescript
@@ -214,7 +214,7 @@ bot.action('submit', async (ctx) => {
 
 For bots that have configured URLs to unfurl in the developer console, use the
 `bot.unfurl()` method to handle unfurl requests. A bot can use either a single generic handler
-for all unfurl requests or multiple hanlders with [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)
+for all unfurl requests or multiple handlers with [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)
 to match specific URLs. When patterns are used, the resulting match and any capture groups
 are exposed via `ctx.urlPatternResult`.
 
@@ -241,7 +241,7 @@ bot.unfurl({
 
 ## Add to and remove from space events
 
-To be notified when a bot is added or removed to a space, use `bot.addedToSpace()` and `bot.removedFromSpace()` methods.
+To be notified when a bot is added to a space or removed from a space, use `bot.addedToSpace()` and `bot.removedFromSpace()` methods.
 
 ```typescript
 bot.addedToSpace(async ctx => {
@@ -261,11 +261,11 @@ The `Context` instance supplied to handlers includes several methods for replyin
 
 * `reply` - Replies directly to the user's message with a new message
 * `updateMessage` - For actions on interactive cards and link unfurls, updates the previous message where
-  the action occurred.
-* `newMessageInThread` - Similar to reply, but for sending additional messages on the thread.
+  the action occurred
+* `newMessageInThread` - Similar to reply, but for sending additional messages on the thread
 * `newMessageInSpace` - Starts a new thread in the space
-* `showDialog` - Shows a dialog, either in respond to a slash command or dialog action
-* `closeDialog` - Closes the current dialog when called from an action handler.
+* `showDialog` - Shows a dialog, either in response to a slash command or dialog action
+* `closeDialog` - Closes the current dialog when called from an action handler
 
 These helpers automatically merges the space and thread names into the message. You only need to supply
 the message content itself.
