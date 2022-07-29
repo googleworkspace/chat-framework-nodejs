@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-v0.2.5...chat-sdk-v0.2.6) (2022-07-29)
+
+
+### Bug Fixes
+
+* Make cardsV2 an array ([9de5d77](https://github.com/googleworkspace/chat-framework-nodejs/commit/9de5d770dbf77d0be53523165cab49ddcfdeb0fa))
+
 ## [0.2.5](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-v0.2.4...chat-sdk-v0.2.5) (2022-07-08)
 
 

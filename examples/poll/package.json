@@ -1,6 +1,6 @@
 {
   "name": "@google/chat-sdk-example-poll",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Example Google Chat bot for quick surveys",
   "homepage": "https://github.com/googleworkspace/chat-framework-nodejs",
   "bugs": {
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "@google/chat-sdk": "^0.2.5",
+    "@google/chat-sdk": "^0.2.6",
     "ts-node": "^10.2.1"
   }
 }

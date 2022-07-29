@@ -10,6 +10,12 @@
   * dependencies
     * @google/chat-sdk bumped from ^0.2.4 to ^0.2.5
 
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @google/chat-sdk bumped from ^0.2.5 to ^0.2.6
+
 ### [0.2.3](https://www.github.com/googleworkspace/chat-framework-nodejs/compare/google-chat-nodejs-hello-http-v0.2.2...google-chat-nodejs-hello-http-v0.2.3) (2022-02-10)
 
 
