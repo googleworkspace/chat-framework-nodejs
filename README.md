@@ -90,7 +90,7 @@ The framework supports both HTTPS and Cloud PubSub transports.
 
 To create a bot using https, use the `Bot.http(opts)` factory method. Options include:
 
-* `port` (default: `3000`) - Port to listen on
+* `port` (default: `8080`) - Port to listen on
 * `path` (default: `'/'`) - URL path for incoming messages.
 * `trustProxy` (default: `true`) - Enables recognition of X-forward-for headers in requests
 * `projectNumber` (default: `undefined`) - Project # of the bot in the [developer console](https://console.cloud.google.com).
