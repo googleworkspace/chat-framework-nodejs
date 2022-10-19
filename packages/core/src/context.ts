@@ -27,7 +27,7 @@ export interface Events {
 
 export interface CardsV2 {
   cardsV2?: Array<{
-    id?: string;
+    cardId?: string;
     card: chat_v1.Schema$GoogleAppsCardV1Card;
   }>;
 }
