@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.6](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-repo-v0.2.5...chat-sdk-repo-v0.2.6) (2022-10-19)
+
+
+### Bug Fixes
+
+* Correct definition of id field for v2 cards ([ca28c16](https://github.com/googleworkspace/chat-framework-nodejs/commit/ca28c16f2ca71a7c2814a460735700f17d9a4c50))
+* Make cardsV2 an array ([9de5d77](https://github.com/googleworkspace/chat-framework-nodejs/commit/9de5d770dbf77d0be53523165cab49ddcfdeb0fa))
+
 ## [0.2.5](https://github.com/googleworkspace/chat-framework-nodejs/compare/chat-sdk-repo-v0.2.4...chat-sdk-repo-v0.2.5) (2022-07-08)
 
 
